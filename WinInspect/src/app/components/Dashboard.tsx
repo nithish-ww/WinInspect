@@ -202,92 +202,96 @@ export default function Dashboard({ onNewProject, onViewProject }: DashboardProp
       )}
 
       {/* Projects List */}
-      <div className="bg-white rounded-xl border border-slate-200">
-        <div className="p-6 border-b border-slate-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-slate-900 mb-1">Your Projects</h2>
-              <p className="text-slate-600 text-sm">Track and manage all TQA review requests</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 bg-white">
-                <option>All Projects</option>
-                <option>Approved</option>
-                <option>In Progress</option>
-                <option>Pending</option>
-              </select>
-            </div>
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-slate-900 mb-1">Your Projects</h2>
+            <p className="text-slate-600 text-sm">Track and manage all TQA review requests</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 bg-white">
+              <option>All Projects</option>
+              <option>Approved</option>
+              <option>In Progress</option>
+              <option>Pending</option>
+            </select>
           </div>
         </div>
 
-        <div className="divide-y divide-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="p-6 hover:bg-slate-50 transition-colors cursor-pointer"
+              className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-indigo-300 transition-all cursor-pointer group"
               onClick={() => onViewProject(project.id)}
             >
+              {/* Header with Status */}
               <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-slate-900">{project.name}</h3>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
-                      {project.status}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm text-slate-600">
-                    <span className="flex items-center gap-1">
-                      <FileText className="w-4 h-4" />
-                      {project.id}
-                    </span>
-                    <span>{project.type}</span>
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      Submitted: {project.submittedDate}
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right ml-6">
-                  <p className="text-xs text-slate-500 mb-1">Readiness Score</p>
-                  <p className={`text-2xl font-bold ${getScoreColor(project.readinessScore)}`}>
+                <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
+                  {project.status}
+                </span>
+                <div className="text-right">
+                  <p className="text-xs text-slate-500 mb-1">Score</p>
+                  <p className={`text-xl font-bold ${getScoreColor(project.readinessScore)}`}>
                     {project.readinessScore}
-                    <span className="text-sm text-slate-400">/100</span>
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  {project.reviewers.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      <div className="flex -space-x-2">
-                        {project.reviewers.slice(0, 3).map((reviewer, idx) => (
-                          <div
-                            key={idx}
-                            className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full border-2 border-white flex items-center justify-center text-xs text-white"
-                          >
-                            {reviewer.split(' ').map(n => n[0]).join('')}
-                          </div>
-                        ))}
-                      </div>
-                      <span className="text-sm text-slate-600">
-                        {project.reviewers.length === 1
-                          ? project.reviewers[0]
-                          : `${project.reviewers.length} reviewers`}
-                      </span>
-                    </div>
-                  )}
-                  {project.actionItems && (
-                    <div className="flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">
-                      <AlertCircle className="w-3 h-3" />
-                      {project.actionItems} action items
-                    </div>
-                  )}
+              {/* Project Name */}
+              <h3 className="font-semibold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                {project.name}
+              </h3>
+
+              {/* Project Details */}
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <FileText className="w-4 h-4" />
+                  <span>{project.id}</span>
                 </div>
-                <button className="px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors text-sm font-medium">
-                  View Details →
-                </button>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <span className="px-2 py-1 bg-slate-100 rounded text-xs">{project.type}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>Submitted: {project.submittedDate}</span>
+                </div>
               </div>
+
+              {/* Action Items Alert */}
+              {project.actionItems && (
+                <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg text-xs font-medium mb-4">
+                  <AlertCircle className="w-4 h-4" />
+                  {project.actionItems} action items pending
+                </div>
+              )}
+
+              {/* Reviewers */}
+              {project.reviewers.length > 0 && (
+                <div className="flex items-center gap-2 mb-4 pb-4 border-b border-slate-200">
+                  <div className="flex -space-x-2">
+                    {project.reviewers.slice(0, 3).map((reviewer, idx) => (
+                      <div
+                        key={idx}
+                        className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full border-2 border-white flex items-center justify-center text-xs text-white"
+                        title={reviewer}
+                      >
+                        {reviewer.split(' ').map(n => n[0]).join('')}
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-sm text-slate-600">
+                    {project.reviewers.length === 1
+                      ? project.reviewers[0]
+                      : `${project.reviewers.length} reviewers`}
+                  </span>
+                </div>
+              )}
+
+              {/* View Button */}
+              <button className="w-full px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors text-sm font-medium group-hover:bg-indigo-600 group-hover:text-white">
+                View Details →
+              </button>
             </div>
           ))}
         </div>

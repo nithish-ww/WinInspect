@@ -2,3 +2,20 @@
 @source '../**/*.{js,ts,jsx,tsx}';
 
 @import 'tw-animate-css';
+
+/* Ensure all buttons and interactive elements have pointer cursor */
+button,
+a,
+[role="button"],
+[type="button"],
+[type="submit"],
+[type="reset"],
+.cursor-pointer {
+  cursor: pointer;
+}
+
+select,
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
