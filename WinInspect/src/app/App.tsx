@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, Calendar, CheckCircle2, Clock, FileText, LayoutDashboard, Plus, Settings, User, Users, BarChart3, LogOut } from 'lucide-react';
+import { Bell, CheckCircle2, Settings, User, Users, BarChart3, LogOut, Search } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import NewProjectForm from './components/NewProjectForm';
 import ProjectDetails from './components/ProjectDetails';
@@ -96,31 +96,7 @@ export default function App() {
                   <p className="text-xs text-slate-500">TQA Review System</p>
                 </div>
               </button>
-              
-              <nav className="hidden md:flex items-center gap-1">
-                <button
-                  onClick={handleBackToDashboard}
-                  className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-                    currentView === 'dashboard'
-                      ? 'bg-slate-100 text-slate-900'
-                      : 'text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  Dashboard
-                </button>
-                <button className="px-4 py-2 rounded-lg flex items-center gap-2 text-slate-600 hover:bg-slate-50 transition-colors">
-                  <Calendar className="w-4 h-4" />
-                  Reviews
-                </button>
-                <button className="px-4 py-2 rounded-lg flex items-center gap-2 text-slate-600 hover:bg-slate-50 transition-colors">
-                  <FileText className="w-4 h-4" />
-                  Reports
-                </button>
-              </nav>
-            </div>
 
-            <div className="flex items-center gap-3">
               {/* Role Switcher */}
               <div className="flex items-center gap-1 bg-slate-100 rounded-lg p-1">
                 <button
@@ -156,6 +132,20 @@ export default function App() {
                   <BarChart3 className="w-4 h-4" />
                   Management
                 </button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {/* Search Box */}
+              <div className="hidden md:block">
+                <div className="relative">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Search projects, reviews..."
+                    className="pl-10 pr-4 py-2 w-80 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
               </div>
 
               <div className="relative">
