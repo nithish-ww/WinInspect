@@ -258,7 +258,10 @@ export default function DocumentUpload({ projectId }: DocumentUploadProps) {
         </button>
         <button
           disabled={completionPercentage < 80}
-          className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+          onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
         >
           Submit for Pre-Review Analysis →
         </button>

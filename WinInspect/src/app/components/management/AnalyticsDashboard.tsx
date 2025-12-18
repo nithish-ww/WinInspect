@@ -26,7 +26,12 @@ export default function AnalyticsDashboard({ onBack }: AnalyticsDashboardProps) 
             <option>Last 3 Months</option>
             <option>Last Year</option>
           </select>
-          <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2 font-semibold shadow-md">
+          <button 
+            className="px-6 py-3 text-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2 font-semibold shadow-md"
+            style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
+          >
             <Download className="w-4 h-4" />
             Export Report
           </button>

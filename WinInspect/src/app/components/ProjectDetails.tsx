@@ -144,9 +144,14 @@ export default function ProjectDetails({ projectId, onBack }: ProjectDetailsProp
                 {project.reviewers.map((reviewer: string, idx: number) => (
                   <div
                     key={idx}
-                    className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full border-2 border-white flex items-center justify-center text-xs text-white"
+                    className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full border-2 border-white flex items-center justify-center text-xs text-white relative reviewer-tooltip"
                   >
                     {reviewer.split(' ').map(n => n[0]).join('')}
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full mb-2 hidden bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap z-10 pointer-events-none reviewer-tooltip-content">
+                      {reviewer}
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-black"></div>
+                    </div>
                   </div>
                 ))}
               </div>

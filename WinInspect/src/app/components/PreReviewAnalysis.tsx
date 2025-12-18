@@ -339,7 +339,12 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
         <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
           Address Issues First
         </button>
-        <button className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 font-medium">
+        <button 
+          className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
+          style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
+        >
           Proceed to Schedule Review →
         </button>
       </div>

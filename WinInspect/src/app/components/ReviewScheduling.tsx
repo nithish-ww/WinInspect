@@ -144,7 +144,7 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
           </div>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {reviewers.map((reviewer) => (
             <div key={reviewer.name} className="border border-slate-200 rounded-lg p-4">
               <div className="flex items-start gap-4">
@@ -203,7 +203,7 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
         </div>
 
         <div className="p-6">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {timeSlots.map((slot, idx) => (
               <button
                 key={idx}
@@ -282,14 +282,17 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-end gap-4">
         <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
           Request Different Reviewers
         </button>
         <button
           onClick={handleConfirm}
           disabled={!selectedSlot}
-          className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          style={{ backgroundColor: '#003087' }}
+          onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#003087')}
         >
           Confirm & Schedule Review
         </button>

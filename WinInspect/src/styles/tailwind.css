@@ -19,3 +19,8 @@ input[type="checkbox"],
 input[type="radio"] {
   cursor: pointer;
 }
+
+/* Reviewer tooltip - only show on hover of the specific circle */
+.reviewer-tooltip:hover .reviewer-tooltip-content {
+  display: block;
+}

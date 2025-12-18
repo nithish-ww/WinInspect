@@ -263,7 +263,12 @@ export default function FollowUpTracking({ project }: FollowUpTrackingProps) {
                       <p className="text-sm text-slate-700">
                         Waiting for engineer to start work on this item.
                       </p>
-                      <button className="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium flex items-center gap-2">
+                      <button 
+                        className="mt-3 px-4 py-2 text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
+                        style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
+                      >
                         <Send className="w-4 h-4" />
                         Send Reminder
                       </button>
@@ -307,7 +312,12 @@ export default function FollowUpTracking({ project }: FollowUpTrackingProps) {
         <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
           Export Status Report
         </button>
-        <button className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 font-medium">
+        <button 
+          className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
+          style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
+        >
           Send Status Update to Engineer
         </button>
       </div>

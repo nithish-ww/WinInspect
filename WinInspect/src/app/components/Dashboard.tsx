@@ -1,4 +1,4 @@
-import { AlertCircle, Calendar, CheckCircle2, Clock, FileText, Plus, TrendingUp } from 'lucide-react';
+import { Calendar, CheckCircle2, Clock, FileText, LayoutDashboard, Plus, Tag, TrendingUp } from 'lucide-react';
 
 interface DashboardProps {
   onNewProject: () => void;
@@ -92,7 +92,10 @@ export default function Dashboard({ onNewProject, onViewProject }: DashboardProp
         </div>
         <button
           onClick={onNewProject}
-          className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 flex items-center gap-2"
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg flex items-center gap-2"
+          style={{ backgroundColor: '#003087' }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#002366'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#003087'}
         >
           <Plus className="w-5 h-5" />
           Request New TQA Review
@@ -149,53 +152,47 @@ export default function Dashboard({ onNewProject, onViewProject }: DashboardProp
 
       {/* Upcoming Reviews */}
       {upcomingReviews.length > 0 && (
-        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Calendar className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-slate-900">Upcoming Review</h3>
-              <p className="text-slate-600 text-sm">Your next scheduled review meeting</p>
-            </div>
-          </div>
-
+        <div className="rounded-xl p-4" style={{ background: 'linear-gradient(to right, #003087, #00b3c2)' }}>
           {upcomingReviews.map((review) => (
-            <div key={review.id} className="bg-white rounded-lg border border-indigo-200 p-4">
-              <div className="flex items-start justify-between mb-3">
+            <div key={review.id} className="flex items-center justify-between text-white">
+              {/* Left: Icon, Project & Date */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-5 h-5 text-white" />
+                </div>
                 <div>
-                  <h4 className="font-semibold text-slate-900 mb-1">{review.project}</h4>
-                  <p className="text-slate-600 text-sm">{review.id}</p>
+                  <h4 className="font-semibold text-white">{review.project}</h4>
+                  <p className="text-indigo-100 text-sm">{review.date} at {review.time}</p>
                 </div>
-                <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">
-                  {review.daysUntil} days
-                </span>
               </div>
-              <div className="flex items-center gap-6 text-sm">
-                <div className="flex items-center gap-2 text-slate-600">
-                  <Calendar className="w-4 h-4" />
-                  {review.date} at {review.time}
-                </div>
+
+              {/* Right: Reviewers & Button */}
+              <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
                     {review.reviewers.map((reviewer, idx) => (
                       <div
                         key={idx}
-                        className="w-7 h-7 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full border-2 border-white flex items-center justify-center text-xs text-white"
+                        className="w-8 h-8 bg-white rounded-full border-2 border-indigo-500 flex items-center justify-center text-xs text-indigo-600 font-semibold relative reviewer-tooltip"
                       >
                         {reviewer.split(' ').map(n => n[0]).join('')}
+                        {/* Tooltip */}
+                        <div className="absolute bottom-full mb-2 hidden bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap z-10 pointer-events-none reviewer-tooltip-content">
+                          {reviewer}
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-black"></div>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  <span className="text-slate-600 text-sm">{review.reviewers.join(', ')}</span>
+                  <span className="text-white text-sm font-medium">{review.reviewers.length} reviewer{review.reviewers.length !== 1 ? 's' : ''}</span>
                 </div>
+                <button
+                  onClick={() => onViewProject(review.id)}
+                  className="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors text-sm font-semibold"
+                >
+                  Prepare →
+                </button>
               </div>
-              <button
-                onClick={() => onViewProject(review.id)}
-                className="mt-4 w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
-              >
-                Prepare for Review
-              </button>
             </div>
           ))}
         </div>
@@ -222,76 +219,99 @@ export default function Dashboard({ onNewProject, onViewProject }: DashboardProp
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-indigo-300 transition-all cursor-pointer group"
+              className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-xl hover:border-slate-300 transition-all cursor-pointer group"
               onClick={() => onViewProject(project.id)}
             >
-              {/* Header with Status */}
-              <div className="flex items-start justify-between mb-4">
-                <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
-                  {project.status}
-                </span>
-                <div className="text-right">
-                  <p className="text-xs text-slate-500 mb-1">Score</p>
-                  <p className={`text-xl font-bold ${getScoreColor(project.readinessScore)}`}>
-                    {project.readinessScore}
-                  </p>
+              {/* Icon and Project Name - Horizontal */}
+              <div className="flex items-start gap-3 mb-6">
+                <div className="rounded-xl flex items-center justify-center flex-shrink-0 p-3" style={{ backgroundColor: '#E6F0FF' }}>
+                  <LayoutDashboard className="w-8 h-8" style={{ color: '#003087' }} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-slate-900 transition-colors mb-2" style={{ color: '#003087' }}>
+                    {project.name}
+                  </h3>
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                    project.status === 'Approved' ? 'bg-green-100 text-green-700' :
+                    project.status === 'Review Scheduled' ? 'bg-blue-100 text-blue-700' :
+                    project.status === 'Action Items Pending' ? 'bg-amber-100 text-amber-700' :
+                    'bg-slate-100 text-slate-700'
+                  }`}>
+                    {project.status}
+                  </span>
                 </div>
               </div>
 
-              {/* Project Name */}
-              <h3 className="font-semibold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                {project.name}
-              </h3>
-
-              {/* Project Details */}
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <FileText className="w-4 h-4" />
+              {/* Project Details - ID, Type, Submitted */}
+              <div className="flex items-center gap-4 text-sm text-slate-600 mb-6">
+                <div className="flex items-center gap-1.5">
+                  <FileText className="w-4 h-4" style={{ color: '#003087' }} />
                   <span>{project.id}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <span className="px-2 py-1 bg-slate-100 rounded text-xs">{project.type}</span>
+                <div className="flex items-center gap-1.5">
+                  <Tag className="w-4 h-4" style={{ color: '#003087' }} />
+                  <span>{project.type}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <Calendar className="w-4 h-4" />
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4" style={{ color: '#003087' }} />
                   <span>Submitted: {project.submittedDate}</span>
                 </div>
               </div>
 
-              {/* Action Items Alert */}
-              {project.actionItems && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg text-xs font-medium mb-4">
-                  <AlertCircle className="w-4 h-4" />
-                  {project.actionItems} action items pending
-                </div>
-              )}
-
-              {/* Reviewers */}
-              {project.reviewers.length > 0 && (
-                <div className="flex items-center gap-2 mb-4 pb-4 border-b border-slate-200">
-                  <div className="flex -space-x-2">
-                    {project.reviewers.slice(0, 3).map((reviewer, idx) => (
-                      <div
-                        key={idx}
-                        className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full border-2 border-white flex items-center justify-center text-xs text-white"
-                        title={reviewer}
-                      >
-                        {reviewer.split(' ').map(n => n[0]).join('')}
+              {/* Footer with Avatars and Stats */}
+              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                {/* Reviewers Avatars */}
+                <div className="flex items-center gap-2">
+                  {project.reviewers.length > 0 ? (
+                    <>
+                      <div className="flex -space-x-3">
+                        {project.reviewers.slice(0, 2).map((reviewer, idx) => (
+                          <div
+                            key={idx}
+                            className={`w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs text-white font-semibold relative reviewer-tooltip ${
+                              idx === 0 
+                                ? 'bg-blue-500' 
+                                : 'bg-cyan-400'
+                            }`}
+                          >
+                            {reviewer.split(' ').map(n => n[0]).join('')}
+                            {/* Tooltip */}
+                            <div className="absolute bottom-full mb-2 hidden bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap z-10 pointer-events-none reviewer-tooltip-content">
+                              {reviewer}
+                              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-black"></div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                  <span className="text-sm text-slate-600">
-                    {project.reviewers.length === 1
-                      ? project.reviewers[0]
-                      : `${project.reviewers.length} reviewers`}
-                  </span>
+                      <span className="text-sm text-slate-600 font-medium ml-1">
+                        {project.reviewers.length} reviewer{project.reviewers.length !== 1 ? 's' : ''}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex -space-x-3">
+                        <div className="w-9 h-9 bg-slate-200 rounded-full border-2 border-white"></div>
+                        <div className="w-9 h-9 bg-slate-300 rounded-full border-2 border-white"></div>
+                      </div>
+                      <span className="text-sm text-slate-400 font-medium ml-1">
+                        No reviewers
+                      </span>
+                    </>
+                  )}
                 </div>
-              )}
 
-              {/* View Button */}
-              <button className="w-full px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors text-sm font-medium group-hover:bg-indigo-600 group-hover:text-white">
-                View Details →
-              </button>
+                {/* Stats */}
+                <div className="flex items-center gap-3 text-sm text-slate-500">
+                  <div className="flex items-center gap-1">
+                    <FileText className="w-4 h-4" />
+                    <span>{project.actionItems || 3}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-4 h-4" />
+                    <span>{project.reviewers.length > 0 ? project.reviewers.length * 4 : 12}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -127,8 +127,13 @@ export default function ReviewReport({ project }: ReviewReportProps) {
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {project.reviewers.map((reviewer: string) => (
                   <div key={reviewer} className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-sm">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-sm relative reviewer-tooltip">
                       {reviewer.split(' ').map(n => n[0]).join('')}
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full mb-2 hidden bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap z-10 pointer-events-none reviewer-tooltip-content">
+                        {reviewer}
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-black"></div>
+                      </div>
                     </div>
                     <div>
                       <p className="font-medium text-slate-900 text-sm">{reviewer}</p>

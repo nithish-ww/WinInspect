@@ -58,7 +58,10 @@ export default function ManagementDashboard({ onViewProject, onViewAnalytics }: 
         </div>
         <button
           onClick={onViewAnalytics}
-          className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all flex items-center gap-2 font-medium shadow-md"
+          className="px-6 py-3 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all flex items-center gap-2 font-medium shadow-md"
+          style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
         >
           <BarChart3 className="w-5 h-5" />
           View Analytics

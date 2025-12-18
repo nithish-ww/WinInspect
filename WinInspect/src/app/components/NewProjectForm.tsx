@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Sparkles, CheckCircle2, Clock, ChevronDown, ChevronRight, Calendar, Shield, Zap, Code, TestTube, FileText, Server } from 'lucide-react';
+import { ArrowLeft, Sparkles, CheckCircle2, Clock, ChevronDown, ChevronRight, Shield, Zap, Code, TestTube, FileText, Server, Upload } from 'lucide-react';
 
 interface NewProjectFormProps {
   onBack: () => void;
@@ -24,6 +24,40 @@ export default function NewProjectForm({ onBack }: NewProjectFormProps) {
     description: '',
   });
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const newFiles = Array.from(files);
+      setUploadedFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const handleRemoveFile = (index: number) => {
+    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    if (files) {
+      const newFiles = Array.from(files);
+      setUploadedFiles(prev => [...prev, ...newFiles]);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -275,9 +309,12 @@ export default function NewProjectForm({ onBack }: NewProjectFormProps) {
           </button>
           <button
             onClick={onBack}
-            className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 font-medium"
+            className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
+            style={{ backgroundColor: '#003087' }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#003087')}
           >
-            Continue to Document Upload →
+            Submit for Review
           </button>
         </div>
       </div>
@@ -285,7 +322,7 @@ export default function NewProjectForm({ onBack }: NewProjectFormProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <button
         onClick={onBack}
         className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
@@ -294,151 +331,243 @@ export default function NewProjectForm({ onBack }: NewProjectFormProps) {
         Back to Dashboard
       </button>
 
-      <div className="bg-white rounded-xl border border-slate-200 p-8">
-        <div className="mb-8">
-          <h2 className="text-slate-900 mb-2">Request New TQA Review</h2>
-          <p className="text-slate-600">
-            Fill out the project details below. AI will analyze your inputs and generate a customized review checklist.
-          </p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Form - Left Side (2/3 width) */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 p-8">
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold mb-2" style={{ color: '#003087' }}>Request New TQA Review</h2>
+              <p className="text-slate-600">
+                Fill out the project details. AI will analyze and generate a customized review checklist.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Project Name & Type - Side by side */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Project Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.projectName}
+                    onChange={(e) => setFormData({ ...formData, projectName: e.target.value })}
+                    placeholder="e.g., Payment Gateway v2.0"
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Project Type <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    required
+                    value={formData.projectType}
+                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                  >
+                    <option value="">Select type</option>
+                    <option value="New Feature">New Feature</option>
+                    <option value="Enhancement">Enhancement</option>
+                    <option value="Major Release">Major Release</option>
+                    <option value="Critical Bug Fix">Critical Bug Fix</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Release Date & Business Impact - Side by side */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Target Release Date <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={formData.releaseDate}
+                    onChange={(e) => setFormData({ ...formData, releaseDate: e.target.value })}
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Business Impact <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    required
+                    value={formData.businessImpact}
+                    onChange={(e) => setFormData({ ...formData, businessImpact: e.target.value })}
+                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                  >
+                    <option value="">Select impact</option>
+                    <option value="Critical">Critical</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Technology Stack */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">
+                  Technology Stack <span className="text-red-500">*</span>
+                </label>
+                <div className="space-y-3">
+                  {Object.entries(techStackOptions).map(([category, options]) => (
+                    <div key={category} className="bg-slate-50 rounded-lg p-4">
+                      <p className="text-xs font-medium text-slate-600 mb-2">{category}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {options.map((tech) => (
+                          <button
+                            key={tech}
+                            type="button"
+                            onClick={() => handleTechStackToggle(tech)}
+                            className={`px-3 py-1.5 text-sm rounded-md border transition-all ${
+                              formData.techStack.includes(tech)
+                                ? 'border-[#003087] text-white'
+                                : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                            }`}
+                            style={formData.techStack.includes(tech) ? { backgroundColor: '#003087' } : {}}
+                          >
+                            {tech}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Project Description */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Project Description <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  required
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Describe your project, goals, and key technical decisions..."
+                  rows={4}
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent resize-none"
+                />
+              </div>
+
+              {/* Submit Button */}
+              <div className="flex items-center gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="px-6 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!formData.projectName || !formData.projectType || formData.techStack.length === 0}
+                  className="flex-1 px-6 py-2.5 text-white rounded-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
+                  style={{ backgroundColor: '#003087' }}
+                  onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#002366')}
+                  onMouseLeave={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#003087')}
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Submit for Review
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Project Name */}
-          <div>
-            <label className="block text-slate-700 mb-2 font-medium">
-              Project Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.projectName}
-              onChange={(e) => setFormData({ ...formData, projectName: e.target.value })}
-              placeholder="e.g., Payment Gateway v2.0"
-              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-            />
-          </div>
-
-          {/* Project Type */}
-          <div>
-            <label className="block text-slate-700 mb-2 font-medium">
-              Project Type <span className="text-red-500">*</span>
-            </label>
-            <select
-              required
-              value={formData.projectType}
-              onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-            >
-              <option value="">Select project type</option>
-              <option value="New Feature">New Feature</option>
-              <option value="Enhancement">Enhancement</option>
-              <option value="Major Release">Major Release</option>
-              <option value="Critical Bug Fix">Critical Bug Fix</option>
-              <option value="Infrastructure Change">Infrastructure Change</option>
-            </select>
-          </div>
-
-          {/* Technology Stack */}
-          <div>
-            <label className="block text-slate-700 mb-2 font-medium">
-              Technology Stack <span className="text-red-500">*</span>
-            </label>
-            <div className="space-y-3">
-              {Object.entries(techStackOptions).map(([category, options]) => (
-                <div key={category}>
-                  <p className="text-sm text-slate-600 mb-2">{category}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {options.map((tech) => (
-                      <button
-                        key={tech}
-                        type="button"
-                        onClick={() => handleTechStackToggle(tech)}
-                        className={`px-4 py-2 rounded-lg border transition-all ${
-                          formData.techStack.includes(tech)
-                            ? 'bg-indigo-100 border-indigo-600 text-indigo-700'
-                            : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
-                        }`}
-                      >
-                        {tech}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
+        {/* Document Upload - Right Side (1/3 width) */}
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 sticky top-6">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-1" style={{ color: '#003087' }}>Upload Documents</h3>
+              <p className="text-sm text-slate-600">Upload key project documents</p>
             </div>
-          </div>
 
-          {/* Target Release Date */}
-          <div>
-            <label className="block text-slate-700 mb-2 font-medium">
-              Target Release Date <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
+            {/* Upload Area */}
+            <label 
+              className={`block border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+                isDragging 
+                  ? 'border-[#003087] bg-blue-50' 
+                  : 'border-slate-300 hover:border-[#003087]'
+              }`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <input
-                type="date"
-                required
-                value={formData.releaseDate}
-                onChange={(e) => setFormData({ ...formData, releaseDate: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                type="file"
+                multiple
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.txt"
+                onChange={handleFileUpload}
+                className="hidden"
               />
-              <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+              <Upload className="w-10 h-10 mx-auto mb-3" style={{ color: '#003087' }} />
+              <p className="text-sm font-medium text-slate-900 mb-1">Click to upload files</p>
+              <p className="text-xs text-slate-500">or drag and drop</p>
+              <p className="text-xs text-slate-400 mt-2">PDF, DOC, XLS up to 50MB</p>
+            </label>
+
+            {/* Uploaded Files List */}
+            {uploadedFiles.length > 0 && (
+              <div className="mt-4 space-y-2">
+                <p className="text-xs font-medium text-slate-600 mb-2">Uploaded Files ({uploadedFiles.length})</p>
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <FileText className="w-4 h-4 flex-shrink-0" style={{ color: '#003087' }} />
+                      <span className="text-xs text-slate-700 truncate">{file.name}</span>
+                      <span className="text-xs text-slate-400 flex-shrink-0">
+                        {(file.size / 1024).toFixed(1)} KB
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveFile(index)}
+                      className="ml-2 text-slate-400 hover:text-red-500 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Document Categories Checklist */}
+            <div className="mt-6 space-y-2">
+              <p className="text-xs font-medium text-slate-600 mb-3">Recommended Documents:</p>
+              {checklist.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <div key={category.category} className="flex items-center gap-2 text-sm text-slate-600 p-2 rounded hover:bg-slate-50">
+                    <Icon className="w-4 h-4 flex-shrink-0" style={{ color: '#003087' }} />
+                    <span className="text-xs">{category.category}</span>
+                    <span className="ml-auto text-xs text-slate-400">0/{category.items.length}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-slate-200">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-slate-600">Total Progress</span>
+                <span className="font-semibold" style={{ color: '#003087' }}>0%</span>
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-2 mt-2">
+                <div className="h-2 rounded-full transition-all" style={{ width: '0%', backgroundColor: '#003087' }} />
+              </div>
             </div>
           </div>
-
-          {/* Business Impact */}
-          <div>
-            <label className="block text-slate-700 mb-2 font-medium">
-              Business Impact <span className="text-red-500">*</span>
-            </label>
-            <select
-              required
-              value={formData.businessImpact}
-              onChange={(e) => setFormData({ ...formData, businessImpact: e.target.value })}
-              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-            >
-              <option value="">Select business impact</option>
-              <option value="Critical">Critical - Mission critical system</option>
-              <option value="High">High - Significant business value</option>
-              <option value="Medium">Medium - Moderate business impact</option>
-              <option value="Low">Low - Minor improvements</option>
-            </select>
-          </div>
-
-          {/* Project Description */}
-          <div>
-            <label className="block text-slate-700 mb-2 font-medium">
-              Project Description <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              required
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Provide a brief description of your project, its goals, and key technical decisions..."
-              rows={5}
-              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent resize-none"
-            />
-            <p className="text-sm text-slate-500 mt-2">500-2000 characters recommended</p>
-          </div>
-
-          {/* Submit Button */}
-          <div className="flex items-center gap-4 pt-6 border-t border-slate-200">
-            <button
-              type="button"
-              onClick={onBack}
-              className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={!formData.projectName || !formData.projectType || formData.techStack.length === 0}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-5 h-5" />
-              Analyze & Continue
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

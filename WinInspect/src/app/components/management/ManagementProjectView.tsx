@@ -188,7 +188,10 @@ export default function ManagementProjectView({ projectId, onBack }: ManagementP
                     setInterventionType('escalate');
                     setShowIntervention(true);
                   }}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                  className="w-full px-4 py-3 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                  style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
                 >
                   Take Action
                 </button>
@@ -455,7 +458,10 @@ export default function ManagementProjectView({ projectId, onBack }: ManagementP
               </button>
               <button
                 onClick={() => setShowIntervention(false)}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                className="flex-1 px-6 py-3 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
               >
                 Confirm & Log Intervention
               </button>
