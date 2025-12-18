@@ -1,4 +1,4 @@
-import { AlertCircle, Bell, Calendar, CheckCircle2, Clock, FileText, TrendingUp, AlertTriangle, XCircle, LayoutDashboard, Tag, User, Briefcase } from 'lucide-react';
+import { AlertCircle, Bell, Calendar, CheckCircle2, Clock, FileText, AlertTriangle, LayoutDashboard, User, Briefcase } from 'lucide-react';
 
 interface ReviewerDashboardProps {
   onViewProject: (projectId: string) => void;
@@ -197,50 +197,53 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <FileText className="w-6 h-6 text-blue-600" />
             </div>
-            <TrendingUp className="w-5 h-5 text-green-600" />
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">{assignedReviews.length}</p>
+              <p className="text-slate-600 text-sm">Assigned Reviews</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">Assigned Reviews</p>
-          <p className="text-slate-900 font-bold text-2xl">{assignedReviews.length}</p>
-          <p className="text-orange-600 text-xs mt-2">1 new assignment</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Clock className="w-6 h-6 text-purple-600" />
             </div>
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">
+                {assignedReviews.filter(r => r.status === 'in-review').length}
+              </p>
+              <p className="text-slate-600 text-sm">In Progress</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">In Progress</p>
-          <p className="text-slate-900 font-bold text-2xl">
-            {assignedReviews.filter(r => r.status === 'in-review').length}
-          </p>
-          <p className="text-slate-500 text-xs mt-2">Active reviews</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <AlertCircle className="w-6 h-6 text-amber-600" />
             </div>
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">{followUps.length}</p>
+              <p className="text-slate-600 text-sm">Follow-ups</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">Follow-ups</p>
-          <p className="text-slate-900 font-bold text-2xl">{followUps.length}</p>
-          <p className="text-green-600 text-xs mt-2">1 ready for re-review</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="w-6 h-6 text-green-600" />
             </div>
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">18</p>
+              <p className="text-slate-600 text-sm">This Month</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">This Month</p>
-          <p className="text-slate-900 font-bold text-2xl">18</p>
-          <p className="text-green-600 text-xs mt-2">+3 vs last month</p>
         </div>
       </div>
 
@@ -277,7 +280,7 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {review.isNew && (
-                      <span className="inline-block px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium">
+                      <span className="inline-block px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs font-medium">
                         NEW
                       </span>
                     )}
@@ -305,8 +308,8 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
               </div>
 
               {/* Risk Level, AI Status, Items to Review - in one line */}
-              <div className="flex items-center gap-4 text-sm text-slate-600 mb-4">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 text-sm text-slate-600 mb-4">
+                <div className="flex items-center gap-1.5">
                   <div className={`w-2 h-2 rounded-full ${
                     review.riskLevel === 'high' ? 'bg-red-500' :
                     review.riskLevel === 'medium' ? 'bg-amber-500' : 'bg-green-500'
@@ -320,7 +323,7 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
               </div>
 
               {review.pendingActions && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-sm mb-4">
+                <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-sm mb-6">
                   <AlertTriangle className="w-4 h-4 text-amber-600" />
                   <span className="text-amber-700 font-medium text-xs">
                     {review.pendingActions} action items pending
@@ -347,9 +350,9 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
               </div>
 
               {review.daysUntil && (
-                <div className="mt-4 flex items-center gap-2 px-3 py-2 bg-orange-50 border border-orange-200 rounded-lg">
-                  <Clock className="w-4 h-4 text-orange-600" />
-                  <span className="text-orange-700 font-medium text-sm">
+                <div className="mt-4 flex items-center gap-2 px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-lg">
+                  <Clock className="w-3.5 h-3.5 text-orange-600" />
+                  <span className="text-orange-700 font-medium text-xs">
                     Review in {review.daysUntil} days
                   </span>
                 </div>
@@ -408,21 +411,21 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
 
               {/* Due Date or Completed Date */}
               {followUp.status === 'in-progress' && followUp.dueDate && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-sm mb-4">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-lg text-sm mb-4">
                   <Clock className="w-4 h-4 text-blue-600" />
                   <span className="text-blue-700 font-medium">Due: {followUp.dueDate}</span>
                 </div>
               )}
               
               {followUp.completedDate && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-green-50 border border-green-200 rounded-lg text-sm mb-4">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-lg text-sm mb-4">
                   <CheckCircle2 className="w-4 h-4 text-green-600" />
                   <span className="text-green-700 font-medium">Completed: {followUp.completedDate}</span>
                 </div>
               )}
 
               {/* Action Items Progress */}
-              <div className="mb-4">
+              <div className="mb-6">
                 <div className="flex items-center justify-between text-sm mb-2">
                   <span className="text-slate-600">Action Items Progress</span>
                   <span className="font-medium text-slate-900">

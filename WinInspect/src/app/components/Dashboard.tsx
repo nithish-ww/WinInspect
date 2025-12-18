@@ -1,4 +1,4 @@
-import { Calendar, CheckCircle2, Clock, FileText, LayoutDashboard, Plus, Tag, TrendingUp } from 'lucide-react';
+import { Calendar, CheckCircle2, Clock, FileText, LayoutDashboard, Plus, Tag } from 'lucide-react';
 
 interface DashboardProps {
   onNewProject: () => void;
@@ -105,48 +105,51 @@ export default function Dashboard({ onNewProject, onViewProject }: DashboardProp
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <FileText className="w-6 h-6 text-blue-600" />
             </div>
-            <TrendingUp className="w-5 h-5 text-green-600" />
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">12</p>
+              <p className="text-slate-600 text-sm">Total Projects</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">Total Projects</p>
-          <p className="text-slate-900 font-bold text-2xl">12</p>
-          <p className="text-green-600 text-xs mt-2">+2 this month</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="w-6 h-6 text-green-600" />
             </div>
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">8</p>
+              <p className="text-slate-600 text-sm">Approved</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">Approved</p>
-          <p className="text-slate-900 font-bold text-2xl">8</p>
-          <p className="text-slate-500 text-xs mt-2">67% approval rate</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Clock className="w-6 h-6 text-amber-600" />
             </div>
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">3</p>
+              <p className="text-slate-600 text-sm">In Progress</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">In Progress</p>
-          <p className="text-slate-900 font-bold text-2xl">3</p>
-          <p className="text-slate-500 text-xs mt-2">Active reviews</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Calendar className="w-6 h-6 text-purple-600" />
             </div>
+            <div className="flex-1 text-right">
+              <p className="text-slate-900 font-bold text-2xl mb-1">5.2d</p>
+              <p className="text-slate-600 text-sm">Avg. Review Time</p>
+            </div>
           </div>
-          <p className="text-slate-600 text-sm mb-1">Avg. Review Time</p>
-          <p className="text-slate-900 font-bold text-2xl">5.2d</p>
-          <p className="text-green-600 text-xs mt-2">-0.8 days vs last month</p>
         </div>
       </div>
 
