@@ -1,0 +1,445 @@
+import { useState } from 'react';
+import { ArrowLeft, Sparkles, CheckCircle2, Clock, ChevronDown, ChevronRight, Calendar, Shield, Zap, Code, TestTube, FileText, Server } from 'lucide-react';
+
+interface NewProjectFormProps {
+  onBack: () => void;
+}
+
+const techStackOptions = {
+  Frontend: ['React', 'Angular', 'Vue', 'Next.js', 'Svelte'],
+  Backend: ['Node.js', 'Java', 'Python', 'Go', '.NET', 'Ruby'],
+  Database: ['PostgreSQL', 'MongoDB', 'MySQL', 'Redis', 'DynamoDB'],
+  Cloud: ['AWS', 'Azure', 'GCP', 'On-Premise'],
+  Other: ['Docker', 'Kubernetes', 'Microservices', 'GraphQL', 'REST API'],
+};
+
+export default function NewProjectForm({ onBack }: NewProjectFormProps) {
+  const [step, setStep] = useState<'form' | 'analyzing' | 'results'>('form');
+  const [formData, setFormData] = useState({
+    projectName: '',
+    projectType: '',
+    techStack: [] as string[],
+    releaseDate: '',
+    businessImpact: '',
+    description: '',
+  });
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStep('analyzing');
+    setTimeout(() => setStep('results'), 2000);
+  };
+
+  const handleTechStackToggle = (tech: string) => {
+    setFormData(prev => ({
+      ...prev,
+      techStack: prev.techStack.includes(tech)
+        ? prev.techStack.filter(t => t !== tech)
+        : [...prev.techStack, tech]
+    }));
+  };
+
+  const checklist = [
+    {
+      category: 'Architecture & Design',
+      icon: Server,
+      items: [
+        'System architecture diagram',
+        'High-level design document',
+        'Component interaction diagrams',
+        'Data flow diagrams',
+        'Infrastructure architecture',
+      ],
+    },
+    {
+      category: 'Security & Compliance',
+      icon: Shield,
+      items: [
+        'OWASP security scan results',
+        'Penetration test report',
+        'Authentication/authorization design',
+        'Data encryption strategy',
+        'Compliance documentation (PCI-DSS)',
+      ],
+    },
+    {
+      category: 'Performance & Scalability',
+      icon: Zap,
+      items: [
+        'Load test results',
+        'Performance benchmarks',
+        'Scalability analysis',
+        'Resource utilization metrics',
+        'Caching strategy',
+      ],
+    },
+    {
+      category: 'Code Quality',
+      icon: Code,
+      items: [
+        'Code coverage report (≥75%)',
+        'Static analysis results',
+        'Code duplication analysis',
+        'Technical debt assessment',
+        'Dependency vulnerability scan',
+      ],
+    },
+    {
+      category: 'Testing',
+      icon: TestTube,
+      items: [
+        'Test strategy document',
+        'Unit test results',
+        'Integration test results',
+        'UAT sign-off',
+        'Test automation coverage',
+      ],
+    },
+    {
+      category: 'Operations',
+      icon: FileText,
+      items: [
+        'Deployment runbook',
+        'Rollback procedures',
+        'Monitoring & alerting setup',
+        'Disaster recovery plan',
+        'SLA definitions',
+      ],
+    },
+  ];
+
+  if (step === 'analyzing') {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-xl border border-slate-200 p-12">
+          <div className="text-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center animate-pulse">
+              <Sparkles className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-slate-900 mb-2">Analyzing Your Project</h2>
+            <p className="text-slate-600 mb-8">
+              AI is generating a customized review checklist based on your inputs...
+            </p>
+            <div className="space-y-3 text-left max-w-md mx-auto">
+              <div className="flex items-center gap-3 text-slate-700">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                Technology stack analyzed
+              </div>
+              <div className="flex items-center gap-3 text-slate-700">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                Project type mapped to review template
+              </div>
+              <div className="flex items-center gap-3 text-slate-700">
+                <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                Generating customized checklist...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'results') {
+    return (
+      <div className="max-w-5xl mx-auto">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </button>
+
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200 p-8 mb-8">
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+              <CheckCircle2 className="w-8 h-8 text-white" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-slate-900 mb-2">Project Successfully Initiated</h2>
+              <p className="text-slate-700 mb-4">
+                Your TQA review request has been created. AI has generated a customized checklist based on your project details.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="bg-white rounded-lg border border-green-200 p-4">
+                  <p className="text-slate-600 text-sm mb-1">Review ID</p>
+                  <p className="font-semibold text-slate-900">TQA-2025-1238</p>
+                </div>
+                <div className="bg-white rounded-lg border border-green-200 p-4">
+                  <p className="text-slate-600 text-sm mb-1">Estimated Timeline</p>
+                  <p className="font-semibold text-slate-900">5-7 business days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-slate-200 mb-8">
+          <div className="p-6 border-b border-slate-200">
+            <div className="flex items-center gap-3 mb-2">
+              <Sparkles className="w-6 h-6 text-indigo-600" />
+              <h3 className="text-slate-900">AI-Generated Review Checklist</h3>
+            </div>
+            <p className="text-slate-600 text-sm">
+              Based on your project type ({formData.projectType}) and technology stack, we've created a customized checklist with {checklist.reduce((acc, cat) => acc + cat.items.length, 0)} items.
+            </p>
+          </div>
+
+          <div className="p-6">
+            <div className="space-y-3">
+              {checklist.map((category) => {
+                const Icon = category.icon;
+                const isExpanded = expandedCategory === category.category;
+                
+                return (
+                  <div key={category.category} className="border border-slate-200 rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => setExpandedCategory(isExpanded ? null : category.category)}
+                      className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-indigo-600" />
+                        </div>
+                        <div className="text-left">
+                          <p className="font-semibold text-slate-900">{category.category}</p>
+                          <p className="text-sm text-slate-600">{category.items.length} required items</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">
+                          Pending
+                        </span>
+                        {isExpanded ? (
+                          <ChevronDown className="w-5 h-5 text-slate-400" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-slate-400" />
+                        )}
+                      </div>
+                    </button>
+                    
+                    {isExpanded && (
+                      <div className="px-4 pb-4 space-y-2 bg-slate-50">
+                        {category.items.map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-slate-200">
+                            <div className="w-5 h-5 border-2 border-slate-300 rounded mt-0.5 flex-shrink-0" />
+                            <div className="flex-1">
+                              <p className="text-sm text-slate-900">{item}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 rounded-xl border border-blue-200 p-6 mb-8">
+          <div className="flex items-start gap-3">
+            <Clock className="w-5 h-5 text-blue-600 mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-slate-900 mb-1">Estimated Timeline</h4>
+              <div className="space-y-2 text-sm text-slate-700">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                  Review Preparation: 2-3 business days
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                  Reviewer Assignment: 1 day
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                  Document Analysis: 1-2 days
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                  Review Meeting: 1-2 hours
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button
+            onClick={onBack}
+            className="flex-1 px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+          >
+            Save as Draft
+          </button>
+          <button
+            onClick={onBack}
+            className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 font-medium"
+          >
+            Continue to Document Upload →
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto">
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to Dashboard
+      </button>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-8">
+        <div className="mb-8">
+          <h2 className="text-slate-900 mb-2">Request New TQA Review</h2>
+          <p className="text-slate-600">
+            Fill out the project details below. AI will analyze your inputs and generate a customized review checklist.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Project Name */}
+          <div>
+            <label className="block text-slate-700 mb-2 font-medium">
+              Project Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.projectName}
+              onChange={(e) => setFormData({ ...formData, projectName: e.target.value })}
+              placeholder="e.g., Payment Gateway v2.0"
+              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            />
+          </div>
+
+          {/* Project Type */}
+          <div>
+            <label className="block text-slate-700 mb-2 font-medium">
+              Project Type <span className="text-red-500">*</span>
+            </label>
+            <select
+              required
+              value={formData.projectType}
+              onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            >
+              <option value="">Select project type</option>
+              <option value="New Feature">New Feature</option>
+              <option value="Enhancement">Enhancement</option>
+              <option value="Major Release">Major Release</option>
+              <option value="Critical Bug Fix">Critical Bug Fix</option>
+              <option value="Infrastructure Change">Infrastructure Change</option>
+            </select>
+          </div>
+
+          {/* Technology Stack */}
+          <div>
+            <label className="block text-slate-700 mb-2 font-medium">
+              Technology Stack <span className="text-red-500">*</span>
+            </label>
+            <div className="space-y-3">
+              {Object.entries(techStackOptions).map(([category, options]) => (
+                <div key={category}>
+                  <p className="text-sm text-slate-600 mb-2">{category}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {options.map((tech) => (
+                      <button
+                        key={tech}
+                        type="button"
+                        onClick={() => handleTechStackToggle(tech)}
+                        className={`px-4 py-2 rounded-lg border transition-all ${
+                          formData.techStack.includes(tech)
+                            ? 'bg-indigo-100 border-indigo-600 text-indigo-700'
+                            : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                        }`}
+                      >
+                        {tech}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Target Release Date */}
+          <div>
+            <label className="block text-slate-700 mb-2 font-medium">
+              Target Release Date <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <input
+                type="date"
+                required
+                value={formData.releaseDate}
+                onChange={(e) => setFormData({ ...formData, releaseDate: e.target.value })}
+                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              />
+              <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Business Impact */}
+          <div>
+            <label className="block text-slate-700 mb-2 font-medium">
+              Business Impact <span className="text-red-500">*</span>
+            </label>
+            <select
+              required
+              value={formData.businessImpact}
+              onChange={(e) => setFormData({ ...formData, businessImpact: e.target.value })}
+              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            >
+              <option value="">Select business impact</option>
+              <option value="Critical">Critical - Mission critical system</option>
+              <option value="High">High - Significant business value</option>
+              <option value="Medium">Medium - Moderate business impact</option>
+              <option value="Low">Low - Minor improvements</option>
+            </select>
+          </div>
+
+          {/* Project Description */}
+          <div>
+            <label className="block text-slate-700 mb-2 font-medium">
+              Project Description <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              required
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              placeholder="Provide a brief description of your project, its goals, and key technical decisions..."
+              rows={5}
+              className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent resize-none"
+            />
+            <p className="text-sm text-slate-500 mt-2">500-2000 characters recommended</p>
+          </div>
+
+          {/* Submit Button */}
+          <div className="flex items-center gap-4 pt-6 border-t border-slate-200">
+            <button
+              type="button"
+              onClick={onBack}
+              className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!formData.projectName || !formData.projectType || formData.techStack.length === 0}
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-5 h-5" />
+              Analyze & Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
