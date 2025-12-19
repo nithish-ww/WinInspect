@@ -53,7 +53,7 @@ export default function ReviewReport({ project }: ReviewReportProps) {
 
       {/* Certificate */}
       <div className="bg-white rounded-xl border-2 border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+        <div className="p-6 text-white" style={{ background: 'linear-gradient(to right, rgb(0, 48, 135), rgb(0, 179, 194))' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
@@ -61,10 +61,15 @@ export default function ReviewReport({ project }: ReviewReportProps) {
               </div>
               <div>
                 <h2 className="text-white mb-1">Certificate of Compliance</h2>
-                <p className="text-indigo-100 text-sm">Technology Quality Assurance Review</p>
+                <p className="text-sm" style={{ color: '#B3E5EC' }}>Technology Quality Assurance Review</p>
               </div>
             </div>
-            <button className="px-6 py-3 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors font-medium flex items-center gap-2">
+            <button 
+              className="px-6 py-3 bg-white rounded-lg transition-colors font-medium flex items-center gap-2"
+              style={{ color: '#003087' }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f0f9ff')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#ffffff')}
+            >
               <Download className="w-5 h-5" />
               Download Certificate
             </button>
@@ -72,9 +77,9 @@ export default function ReviewReport({ project }: ReviewReportProps) {
         </div>
 
         <div className="p-8 bg-gradient-to-br from-slate-50 to-white">
-          <div className="max-w-3xl mx-auto border-4 border-indigo-600 rounded-lg p-8 bg-white">
+          <div className="max-w-3xl mx-auto border-4 rounded-lg p-8 bg-white" style={{ borderColor: '#003087' }}>
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: '#003087' }}>
                 <CheckCircle2 className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-slate-900 mb-2">Certificate of Compliance</h3>
@@ -174,7 +179,7 @@ export default function ReviewReport({ project }: ReviewReportProps) {
         </div>
 
         <div className="p-6">
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {categoryScores.map((category) => (
               <div key={category.name} className="p-4 bg-green-50 border border-green-200 rounded-lg">
                 <div className="flex items-center justify-between">
@@ -300,7 +305,7 @@ export default function ReviewReport({ project }: ReviewReportProps) {
           </div>
           <div className="text-center p-4 bg-slate-50 rounded-lg">
             <p className="text-sm text-slate-600 mb-1">Improvement</p>
-            <p className="text-2xl font-bold text-indigo-600">+18</p>
+            <p className="text-2xl font-bold text-green-600">+18</p>
             <p className="text-xs text-slate-500 mt-1">Points (78 → 96)</p>
           </div>
         </div>
@@ -311,7 +316,7 @@ export default function ReviewReport({ project }: ReviewReportProps) {
         <div className="p-6 border-b border-slate-200">
           <h3 className="text-slate-900">Reviewer Comments</h3>
         </div>
-        <div className="p-6 space-y-4">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border border-slate-200 rounded-lg p-4">
             <div className="flex items-start gap-3 mb-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-sm">
@@ -353,25 +358,25 @@ export default function ReviewReport({ project }: ReviewReportProps) {
         <h3 className="text-slate-900 mb-4">Next Steps</h3>
         <div className="space-y-3">
           <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5" style={{ backgroundColor: '#003087' }}>
               1
             </div>
             <p className="text-slate-700">Download and share approval certificate with deployment team</p>
           </div>
           <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5" style={{ backgroundColor: '#003087' }}>
               2
             </div>
             <p className="text-slate-700">Proceed with deployment planning and execution</p>
           </div>
           <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5" style={{ backgroundColor: '#003087' }}>
               3
             </div>
             <p className="text-slate-700">Schedule penetration test within 30 days post-deployment</p>
           </div>
           <div className="flex items-start gap-3">
-            <div className="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5" style={{ backgroundColor: '#003087' }}>
               4
             </div>
             <p className="text-slate-700">Monitor system in production and submit metrics if required</p>

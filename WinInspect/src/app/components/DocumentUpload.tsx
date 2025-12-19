@@ -93,14 +93,14 @@ export default function DocumentUpload({ projectId }: DocumentUploadProps) {
             <p className="text-slate-600 text-sm">Upload all required documents for AI analysis</p>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold text-indigo-600">{completionPercentage}%</p>
+            <p className="text-3xl font-bold" style={{ color: 'rgb(0, 48, 135)' }}>{completionPercentage}%</p>
             <p className="text-sm text-slate-600">{totalUploaded}/{totalRequired} documents</p>
           </div>
         </div>
         <div className="w-full bg-slate-200 rounded-full h-3">
           <div
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full transition-all"
-            style={{ width: `${completionPercentage}%` }}
+            className="h-3 rounded-full transition-all"
+            style={{ width: `${completionPercentage}%`, backgroundColor: 'rgb(0, 48, 135)' }}
           />
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function DocumentUpload({ projectId }: DocumentUploadProps) {
       {/* AI Insights */}
       <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl border border-purple-200 p-6">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#00b3c2' }}>
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1">
@@ -196,53 +196,55 @@ export default function DocumentUpload({ projectId }: DocumentUploadProps) {
                 </button>
 
                 {isExpanded && (
-                  <div className="px-6 pb-6 space-y-3 bg-slate-50">
-                    {category.items.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className={`p-4 rounded-lg border transition-all ${
-                          item.uploaded
-                            ? 'bg-white border-green-200'
-                            : 'bg-white border-slate-200 border-dashed'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-start gap-3 flex-1">
-                            {item.uploaded ? (
-                              <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                            ) : (
-                              <XCircle className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
-                            )}
-                            <div className="flex-1">
-                              <p className="font-medium text-slate-900 mb-1">{item.name}</p>
-                              {item.uploaded && (
-                                <>
-                                  <p className="text-sm text-slate-600 mb-2">
-                                    <FileText className="w-4 h-4 inline mr-1" />
-                                    {item.fileName}
-                                  </p>
-                                  {item.analysis && (
-                                    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3">
-                                      <div className="flex items-start gap-2">
-                                        <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                                        <p className="text-sm text-slate-700">{item.analysis}</p>
-                                      </div>
-                                    </div>
-                                  )}
-                                </>
+                  <div className="px-6 pb-6 bg-slate-50">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {category.items.map((item, idx) => (
+                        <div
+                          key={idx}
+                          className={`p-4 rounded-lg border transition-all ${
+                            item.uploaded
+                              ? 'bg-white border-green-200'
+                              : 'bg-white border-slate-200 border-dashed'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-start gap-3 flex-1">
+                              {item.uploaded ? (
+                                <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                              ) : (
+                                <XCircle className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                               )}
+                              <div className="flex-1">
+                                <p className="font-medium text-slate-900 mb-1">{item.name}</p>
+                                {item.uploaded && (
+                                  <>
+                                    <p className="text-sm text-slate-600 mb-2">
+                                      <FileText className="w-4 h-4 inline mr-1" />
+                                      {item.fileName}
+                                    </p>
+                                    {item.analysis && (
+                                      <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3">
+                                        <div className="flex items-start gap-2">
+                                          <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
+                                          <p className="text-sm text-slate-700">{item.analysis}</p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </>
+                                )}
+                              </div>
                             </div>
                           </div>
+                          {!item.uploaded && (
+                            <label className="mt-3 flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-slate-300 rounded-lg hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer">
+                              <Upload className="w-4 h-4 text-slate-600" />
+                              <span className="text-sm text-slate-600">Click to upload or drag and drop</span>
+                              <input type="file" className="hidden" />
+                            </label>
+                          )}
                         </div>
-                        {!item.uploaded && (
-                          <label className="mt-3 flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-slate-300 rounded-lg hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer">
-                            <Upload className="w-4 h-4 text-slate-600" />
-                            <span className="text-sm text-slate-600">Click to upload or drag and drop</span>
-                            <input type="file" className="hidden" />
-                          </label>
-                        )}
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -252,13 +254,22 @@ export default function DocumentUpload({ projectId }: DocumentUploadProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <button className="flex-1 px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+      <div className="flex items-center justify-end gap-4">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           Save Progress
         </button>
         <button
           disabled={completionPercentage < 80}
-          className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-medium"
           style={{ backgroundColor: 'rgb(0, 48, 135)' }}
           onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#002366')}
           onMouseLeave={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}

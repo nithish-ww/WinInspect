@@ -132,10 +132,10 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
       {/* Readiness Score */}
       <div className="bg-white rounded-xl border border-slate-200 p-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 mb-4 relative">
+          <div className="inline-flex items-center justify-center w-32 h-32 rounded-full mb-4 relative" style={{ background: '#003087' }}>
             <div className="absolute inset-2 rounded-full bg-white" />
             <div className="relative">
-              <p className="text-5xl font-bold text-indigo-600">{readinessScore}</p>
+              <p className="text-5xl font-bold" style={{ color: '#003087' }}>{readinessScore}</p>
               <p className="text-sm text-slate-600">/100</p>
             </div>
           </div>
@@ -149,10 +149,10 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
             return (
               <div key={category.name} className="text-center p-4 bg-slate-50 rounded-lg">
                 <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mx-auto mb-3 border border-slate-200">
-                  <Icon className="w-6 h-6 text-indigo-600" />
+                  <Icon className="w-6 h-6" style={{ color: '#003087' }} />
                 </div>
                 <p className="text-sm text-slate-600 mb-1">{category.category}</p>
-                <p className="text-2xl font-bold text-indigo-600">{category.score}%</p>
+                <p className="text-2xl font-bold" style={{ color: '#003087' }}>{category.score}%</p>
               </div>
             );
           })}
@@ -190,8 +190,8 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
             return (
               <div key={category.category} className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-indigo-600" />
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E6F0FF' }}>
+                    <Icon className="w-5 h-5" style={{ color: '#003087' }} />
                   </div>
                   <div className="flex-1">
                     <p className="font-semibold text-slate-900">{category.category}</p>
@@ -200,11 +200,11 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-indigo-600">{category.score}%</p>
+                    <p className="text-2xl font-bold" style={{ color: '#003087' }}>{category.score}%</p>
                   </div>
                 </div>
 
-                <div className="space-y-2 ml-13">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ml-13">
                   {category.items.map((item, idx) => (
                     <div
                       key={idx}
@@ -282,7 +282,7 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
           <h3 className="text-slate-900">Identified Risks & Concerns</h3>
           <p className="text-slate-600 text-sm mt-1">Address these items before or during review</p>
         </div>
-        <div className="p-6 space-y-4">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           {aiInsights.risks.map((risk, idx) => (
             <div
               key={idx}
@@ -335,12 +335,21 @@ export default function PreReviewAnalysis({ projectId }: PreReviewAnalysisProps)
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+      <div className="flex items-center justify-end gap-4">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           Address Issues First
         </button>
         <button 
-          className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
           style={{ backgroundColor: 'rgb(0, 48, 135)' }}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Upload, CheckCircle2, AlertCircle, XCircle, Clock, FileText, Shield, Zap, Calendar, User } from 'lucide-react';
+import { ArrowLeft, Upload, CheckCircle2, AlertCircle, XCircle, Clock, FileText, Shield, Zap, Calendar, User, Tag } from 'lucide-react';
 import DocumentUpload from './DocumentUpload';
 import PreReviewAnalysis from './PreReviewAnalysis';
 import ReviewScheduling from './ReviewScheduling';
@@ -116,19 +116,22 @@ export default function ProjectDetails({ projectId, onBack }: ProjectDetailsProp
             </div>
             <div className="flex items-center gap-6 text-sm text-slate-600">
               <span className="flex items-center gap-2">
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4" style={{ color: '#003087' }} />
                 {projectId}
               </span>
-              <span>{project.type}</span>
               <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
+                <Tag className="w-4 h-4" style={{ color: '#003087' }} />
+                {project.type}
+              </span>
+              <span className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" style={{ color: '#003087' }} />
                 Submitted: {project.submittedDate}
               </span>
             </div>
           </div>
           <div className="text-right">
             <p className="text-xs text-slate-500 mb-1">Readiness Score</p>
-            <p className="text-3xl font-bold text-indigo-600">
+            <p className="text-3xl font-bold" style={{ color: 'rgb(0, 48, 135)' }}>
               {project.readinessScore}
               <span className="text-lg text-slate-400">/100</span>
             </p>
@@ -162,7 +165,7 @@ export default function ProjectDetails({ projectId, onBack }: ProjectDetailsProp
       </div>
 
       {/* Progress Steps */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6">
+      <div className="p-6">
         <div className="flex items-center justify-between">
           {steps.map((step, index) => {
             const Icon = step.icon;
@@ -175,11 +178,12 @@ export default function ProjectDetails({ projectId, onBack }: ProjectDetailsProp
                     onClick={() => setActiveTab(step.id)}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
                       status === 'completed'
-                        ? 'bg-green-100 text-green-600'
+                        ? 'bg-green-600 text-white'
                         : status === 'current'
-                        ? 'bg-indigo-600 text-white'
+                        ? 'text-white'
                         : 'bg-slate-100 text-slate-400'
                     } ${activeTab === step.id ? 'ring-4 ring-indigo-200' : ''}`}
+                    style={status === 'current' ? { backgroundColor: 'rgb(0, 48, 135)' } : {}}
                   >
                     <Icon className="w-6 h-6" />
                   </button>
@@ -192,7 +196,7 @@ export default function ProjectDetails({ projectId, onBack }: ProjectDetailsProp
                 {index < steps.length - 1 && (
                   <div className={`h-0.5 flex-1 -mx-4 ${
                     getStepStatus(steps[index + 1].id) === 'completed' || getStepStatus(steps[index + 1].id) === 'current'
-                      ? 'bg-green-300'
+                      ? 'bg-green-600'
                       : 'bg-slate-200'
                   }`} />
                 )}

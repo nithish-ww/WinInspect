@@ -134,8 +134,8 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
       <div className="bg-white rounded-xl border border-slate-200">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-              <User className="w-5 h-5 text-indigo-600" />
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E6F0FF' }}>
+              <User className="w-5 h-5" style={{ color: '#003087' }} />
             </div>
             <div>
               <h3 className="text-slate-900">AI-Matched Reviewers</h3>
@@ -192,8 +192,8 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
       <div className="bg-white rounded-xl border border-slate-200">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-              <Calendar className="w-5 h-5 text-indigo-600" />
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E6F0FF' }}>
+              <Calendar className="w-5 h-5" style={{ color: '#003087' }} />
             </div>
             <div>
               <h3 className="text-slate-900">Select Meeting Time</h3>
@@ -213,9 +213,10 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
                   !slot.available
                     ? 'bg-slate-50 border-slate-200 opacity-50 cursor-not-allowed'
                     : selectedSlot === slot
-                    ? 'bg-indigo-50 border-indigo-600'
-                    : 'bg-white border-slate-200 hover:border-indigo-300'
+                    ? ''
+                    : 'bg-white border-slate-200'
                 }`}
+                style={selectedSlot === slot ? { borderColor: '#003087', backgroundColor: '#E6F0FF' } : {}}
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
@@ -251,21 +252,21 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
         <h4 className="font-semibold text-slate-900 mb-4">Meeting Details</h4>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Clock className="w-5 h-5 text-blue-600" />
+            <Clock className="w-5 h-5" style={{ color: '#003087' }} />
             <div>
               <p className="text-sm text-slate-600">Duration</p>
               <p className="font-medium text-slate-900">90 minutes</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Video className="w-5 h-5 text-blue-600" />
+            <Video className="w-5 h-5" style={{ color: '#003087' }} />
             <div>
               <p className="text-sm text-slate-600">Format</p>
               <p className="font-medium text-slate-900">Virtual Meeting (Zoom)</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <FileText className="w-5 h-5 text-blue-600 mt-1" />
+            <FileText className="w-5 h-5 mt-1" style={{ color: '#003087' }} />
             <div>
               <p className="text-sm text-slate-600 mb-2">Agenda</p>
               <div className="space-y-1 text-sm text-slate-700">
@@ -283,7 +284,16 @@ export default function ReviewScheduling({ project }: ReviewSchedulingProps) {
 
       {/* Actions */}
       <div className="flex items-center justify-end gap-4">
-        <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           Request Different Reviewers
         </button>
         <button

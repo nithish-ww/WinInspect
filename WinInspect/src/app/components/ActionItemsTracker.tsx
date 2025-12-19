@@ -140,15 +140,15 @@ export default function ActionItemsTracker({ projectId }: ActionItemsTrackerProp
             <p className="text-slate-600 text-sm">Track and complete all review action items</p>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold text-indigo-600">{progressPercentage}%</p>
+            <p className="text-3xl font-bold" style={{ color: '#003087' }}>{progressPercentage}%</p>
             <p className="text-sm text-slate-600">{completedCount}/{actionItems.length} completed</p>
           </div>
         </div>
 
         <div className="w-full bg-slate-200 rounded-full h-3 mb-6">
           <div
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full transition-all"
-            style={{ width: `${progressPercentage}%` }}
+            className="h-3 rounded-full transition-all"
+            style={{ width: `${progressPercentage}%`, backgroundColor: '#003087' }}
           />
         </div>
 
@@ -183,7 +183,7 @@ export default function ActionItemsTracker({ projectId }: ActionItemsTrackerProp
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="p-4">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setFilter('all')}
@@ -229,7 +229,7 @@ export default function ActionItemsTracker({ projectId }: ActionItemsTrackerProp
       </div>
 
       {/* Action Items List */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredItems.map((item) => (
           <div
             key={item.id}

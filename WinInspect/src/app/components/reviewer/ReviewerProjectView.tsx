@@ -109,9 +109,10 @@ export default function ReviewerProjectView({ projectId, onBack }: ReviewerProje
                       status === 'completed'
                         ? 'bg-green-100 text-green-600'
                         : status === 'current'
-                        ? 'bg-indigo-600 text-white'
+                        ? 'text-white'
                         : 'bg-slate-100 text-slate-400'
                     } ${activeTab === tab.id ? 'ring-4 ring-indigo-200' : ''}`}
+                    style={status === 'current' ? { backgroundColor: 'rgb(0, 48, 135)' } : {}}
                   >
                     <Icon className="w-6 h-6" />
                   </button>
