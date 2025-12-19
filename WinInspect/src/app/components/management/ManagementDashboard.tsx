@@ -260,11 +260,7 @@ export default function ManagementDashboard({ onViewProject, onViewAnalytics }: 
                       </div>
                       <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                         <div
-                          className={`h-2 rounded-full transition-all ${
-                            project.progress >= 75 ? 'bg-gradient-to-r from-green-500 to-emerald-500' :
-                            project.progress >= 50 ? 'bg-gradient-to-r from-blue-500 to-indigo-500' :
-                            'bg-gradient-to-r from-red-500 to-orange-500'
-                          }`}
+                          className="bg-blue-600 h-2 rounded-full transition-all"
                           style={{ width: `${project.progress}%` }}
                         />
                       </div>

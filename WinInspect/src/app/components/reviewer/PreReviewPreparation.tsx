@@ -135,7 +135,7 @@ export default function PreReviewPreparation({ project }: PreReviewPreparationPr
       {/* AI Pre-Analysis Summary */}
       <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6">
         <div className="flex items-start gap-4">
-          <div className="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#00b3c2' }}>
             <Sparkles className="w-8 h-8 text-white" />
           </div>
           <div className="flex-1">
@@ -175,15 +175,15 @@ export default function PreReviewPreparation({ project }: PreReviewPreparationPr
           <p className="text-slate-600 text-sm">AI-analyzed results across all quality dimensions</p>
         </div>
 
-        <div className="divide-y divide-slate-200">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {checklistCategories.map((category) => {
             const Icon = category.icon;
             return (
-              <div key={category.name} className="p-6">
+              <div key={category.name} className="border border-slate-200 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-indigo-600" />
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E6F0FF' }}>
+                      <Icon className="w-6 h-6" style={{ color: '#003087' }} />
                     </div>
                     <div>
                       <h4 className="font-semibold text-slate-900 mb-1">{category.name}</h4>
@@ -194,16 +194,16 @@ export default function PreReviewPreparation({ project }: PreReviewPreparationPr
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-indigo-600">{category.score}%</p>
+                    <p className="text-2xl font-bold" style={{ color: '#003087' }}>{category.score}%</p>
                   </div>
                 </div>
 
                 <div className="bg-slate-50 rounded-lg p-4">
                   <p className="text-xs font-medium text-slate-600 mb-2">AI KEY FINDINGS:</p>
-                  <ul className="space-y-1">
+                  <ul className="space-y-2">
                     {category.keyFindings.map((finding, idx) => (
                       <li key={idx} className="text-sm text-slate-700 flex items-start gap-2">
-                        <span className="text-indigo-600 mt-1">•</span>
+                        <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: '#003087' }} />
                         <span>{finding}</span>
                       </li>
                     ))}
@@ -289,7 +289,7 @@ export default function PreReviewPreparation({ project }: PreReviewPreparationPr
           </div>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           {focusAreas.map((focus, idx) => (
             <div key={idx} className="border border-slate-200 rounded-lg p-4">
               <div className="flex items-start justify-between mb-3">
@@ -328,7 +328,7 @@ export default function PreReviewPreparation({ project }: PreReviewPreparationPr
       {/* Preparation Checklist */}
       <div className="bg-blue-50 rounded-xl border border-blue-200 p-6">
         <h4 className="font-semibold text-slate-900 mb-4">Reviewer Preparation Checklist</h4>
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <label className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200 cursor-pointer hover:bg-blue-50 transition-colors">
             <input type="checkbox" className="w-5 h-5 text-indigo-600 rounded" />
             <span className="text-sm text-slate-700">Review AI pre-analysis summary and key findings</span>
@@ -349,11 +349,25 @@ export default function PreReviewPreparation({ project }: PreReviewPreparationPr
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+      <div className="flex items-center justify-end gap-4">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           Export Summary
         </button>
-        <button className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 font-medium">
+        <button 
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
+          style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
+        >
           Start Document Review →
         </button>
       </div>

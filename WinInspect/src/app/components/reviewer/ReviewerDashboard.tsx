@@ -152,48 +152,6 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
         </div>
       </div>
 
-      {/* New Assignment Alert */}
-      <div className="rounded-xl p-6" style={{ background: 'linear-gradient(to right, #003087, #00b3c2)' }}>
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-start gap-4 flex-1">
-            <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
-              <Bell className="w-8 h-8 text-white" />
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h3 className="text-white font-semibold">New Review Assignment</h3>
-                <span className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-xs font-medium">
-                  HIGH PRIORITY
-                </span>
-              </div>
-              <p className="text-white/90">
-                <strong>Mobile App Performance Optimization</strong> has been assigned to you for review.
-                AI pre-analysis is complete with a readiness score of 89/100.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => onViewProject('TQA-2025-1235')}
-              className="px-6 py-2 bg-white rounded-lg transition-colors font-medium whitespace-nowrap"
-              style={{ color: '#003087' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f9ff'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
-            >
-              Start Review Preparation
-            </button>
-            <button 
-              className="px-6 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg transition-colors font-medium border border-white/30 whitespace-nowrap"
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
-            >
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl border border-slate-200 p-6">
@@ -243,6 +201,48 @@ export default function ReviewerDashboard({ onViewProject }: ReviewerDashboardPr
               <p className="text-slate-900 font-bold text-2xl mb-1">18</p>
               <p className="text-slate-600 text-sm">This Month</p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* New Assignment Alert */}
+      <div className="rounded-xl p-6" style={{ background: 'linear-gradient(to right, #003087, #00b3c2)' }}>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-start gap-4 flex-1">
+            <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
+              <Bell className="w-8 h-8 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-white font-semibold">New Review Assignment</h3>
+                <span className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-xs font-medium">
+                  HIGH PRIORITY
+                </span>
+              </div>
+              <p className="text-white/90">
+                <strong>Mobile App Performance Optimization</strong> has been assigned to you for review.
+                AI pre-analysis is complete with a readiness score of 89/100.
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => onViewProject('TQA-2025-1235')}
+              className="px-6 py-2 bg-white rounded-lg transition-colors font-medium whitespace-nowrap"
+              style={{ color: '#003087' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f9ff'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
+            >
+              Start Review Preparation
+            </button>
+            <button 
+              className="px-6 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg transition-colors font-medium border border-white/30 whitespace-nowrap"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
+            >
+              View Details
+            </button>
           </div>
         </div>
       </div>

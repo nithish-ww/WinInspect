@@ -99,8 +99,8 @@ export default function DocumentUpload({ projectId }: DocumentUploadProps) {
         </div>
         <div className="w-full bg-slate-200 rounded-full h-3">
           <div
-            className="h-3 rounded-full transition-all"
-            style={{ width: `${completionPercentage}%`, backgroundColor: 'rgb(0, 48, 135)' }}
+            className="bg-blue-600 h-3 rounded-full transition-all"
+            style={{ width: `${completionPercentage}%` }}
           />
         </div>
       </div>

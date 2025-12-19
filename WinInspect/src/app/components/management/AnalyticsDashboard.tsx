@@ -290,7 +290,7 @@ export default function AnalyticsDashboard({ onBack }: AnalyticsDashboardProps) 
                   </div>
                   <div className="pt-2 border-t border-slate-200">
                     <div className="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
-                      <div className={`bg-gradient-to-r ${reviewer.color} h-1.5 rounded-full`} style={{ width: '75%' }} />
+                      <div className="bg-blue-600 h-1.5 rounded-full" style={{ width: '75%' }} />
                     </div>
                   </div>
                 </div>

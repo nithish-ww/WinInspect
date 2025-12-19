@@ -283,16 +283,39 @@ export default function ReportGeneration({ project }: ReportGenerationProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium flex items-center gap-2">
+      <div className="flex items-center justify-end gap-4">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium flex items-center gap-2"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           <Edit className="w-4 h-4" />
           Edit Report
         </button>
-        <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium flex items-center gap-2">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium flex items-center gap-2"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           <Download className="w-4 h-4" />
           Export PDF
         </button>
-        <button className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 font-medium flex items-center justify-center gap-2">
+        <button 
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium flex items-center justify-center gap-2"
+          style={{ backgroundColor: 'rgb(0, 48, 135)' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}
+        >
           <Send className="w-4 h-4" />
           Finalize & Send Report
         </button>

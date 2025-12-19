@@ -387,12 +387,21 @@ export default function DocumentReview({ project }: DocumentReviewProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <button className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+      <div className="flex items-center justify-end gap-4">
+        <button 
+          className="px-6 py-3 bg-white rounded-lg border-2 transition-colors font-medium"
+          style={{ borderColor: '#003087', color: '#003087' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0f9ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+        >
           Save Progress
         </button>
         <button 
-          className="flex-1 px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
+          className="px-6 py-3 text-white rounded-lg transition-all shadow-lg font-medium"
           style={{ backgroundColor: 'rgb(0, 48, 135)' }}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#002366')}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(0, 48, 135)')}

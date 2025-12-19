@@ -492,28 +492,39 @@ export default function NewProjectForm({ onBack }: NewProjectFormProps) {
             </div>
 
             {/* Upload Area */}
-            <label 
-              className={`block border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+            <button
+              type="button"
+              className={`w-full border-2 border-dashed rounded-lg p-8 text-center transition-all cursor-pointer ${
                 isDragging 
-                  ? 'border-[#003087] bg-blue-50' 
-                  : 'border-slate-300 hover:border-[#003087]'
+                  ? 'border-[#003087] bg-blue-50 scale-[1.02]' 
+                  : 'border-slate-300 hover:border-[#003087] hover:bg-blue-50'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
+              onClick={() => {
+                const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+                if (fileInput) {
+                  fileInput.click();
+                }
+              }}
             >
-              <input
-                type="file"
-                multiple
-                accept=".pdf,.doc,.docx,.xls,.xlsx,.txt"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-              <Upload className="w-10 h-10 mx-auto mb-3" style={{ color: '#003087' }} />
-              <p className="text-sm font-medium text-slate-900 mb-1">Click to upload files</p>
-              <p className="text-xs text-slate-500">or drag and drop</p>
-              <p className="text-xs text-slate-400 mt-2">PDF, DOC, XLS up to 50MB</p>
-            </label>
+              <Upload className="w-12 h-12 mx-auto mb-3 pointer-events-none" style={{ color: '#003087' }} />
+              <p className="text-sm font-medium text-slate-900 mb-1 pointer-events-none">Click to select documents</p>
+              <p className="text-xs text-slate-500 mb-2 pointer-events-none">or drag and drop files here</p>
+              <p className="text-xs text-slate-400 pointer-events-none">PDF, DOC, XLS up to 50MB</p>
+            </button>
+            
+            {/* Hidden file input outside the visible area */}
+            <input
+              id="file-upload"
+              type="file"
+              multiple
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.txt"
+              onChange={handleFileUpload}
+              className="hidden"
+              style={{ display: 'none' }}
+            />
 
             {/* Uploaded Files List */}
             {uploadedFiles.length > 0 && (
@@ -563,7 +574,7 @@ export default function NewProjectForm({ onBack }: NewProjectFormProps) {
                 <span className="font-semibold" style={{ color: '#003087' }}>0%</span>
               </div>
               <div className="w-full bg-slate-200 rounded-full h-2 mt-2">
-                <div className="h-2 rounded-full transition-all" style={{ width: '0%', backgroundColor: '#003087' }} />
+                <div className="bg-blue-600 h-2 rounded-full transition-all" style={{ width: '0%' }} />
               </div>
             </div>
           </div>

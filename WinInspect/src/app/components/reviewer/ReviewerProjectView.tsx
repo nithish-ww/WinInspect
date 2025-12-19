@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, FileText, Calendar, CheckCircle2, AlertCircle, Eye, Edit, FileCheck } from 'lucide-react';
+import { ArrowLeft, FileText, Calendar, CheckCircle2, AlertCircle, Eye, Edit, FileCheck, Tag, User } from 'lucide-react';
 import PreReviewPreparation from './PreReviewPreparation';
 import DocumentReview from './DocumentReview';
 import ManualFindings from './ManualFindings';
@@ -72,20 +72,26 @@ export default function ReviewerProjectView({ projectId, onBack }: ReviewerProje
             </div>
             <div className="flex items-center gap-6 text-sm text-slate-600">
               <span className="flex items-center gap-2">
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4" style={{ color: '#003087' }} />
                 {project.id}
               </span>
-              <span>{project.type}</span>
-              <span>Engineer: {project.engineer}</span>
               <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
+                <Tag className="w-4 h-4" style={{ color: '#003087' }} />
+                {project.type}
+              </span>
+              <span className="flex items-center gap-2">
+                <User className="w-4 h-4" style={{ color: '#003087' }} />
+                Engineer: {project.engineer}
+              </span>
+              <span className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" style={{ color: '#003087' }} />
                 Review: {project.reviewDate}
               </span>
             </div>
           </div>
           <div className="text-right">
             <p className="text-xs text-slate-500 mb-1">AI Readiness Score</p>
-            <p className="text-3xl font-bold text-blue-600">
+            <p className="text-3xl font-bold" style={{ color: 'rgb(0, 48, 135)' }}>
               {project.readinessScore}
               <span className="text-lg text-slate-400">/100</span>
             </p>
@@ -94,7 +100,7 @@ export default function ReviewerProjectView({ projectId, onBack }: ReviewerProje
       </div>
 
       {/* Progress Tabs */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6">
+      <div className="p-6">
         <div className="flex items-center justify-between overflow-x-auto">
           {tabs.map((tab, index) => {
             const Icon = tab.icon;
@@ -107,7 +113,7 @@ export default function ReviewerProjectView({ projectId, onBack }: ReviewerProje
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
                       status === 'completed'
-                        ? 'bg-green-100 text-green-600'
+                        ? 'bg-green-600 text-white'
                         : status === 'current'
                         ? 'text-white'
                         : 'bg-slate-100 text-slate-400'
@@ -125,7 +131,7 @@ export default function ReviewerProjectView({ projectId, onBack }: ReviewerProje
                 {index < tabs.length - 1 && (
                   <div className={`h-0.5 flex-1 -mx-4 ${
                     getTabStatus(tabs[index + 1].id) === 'completed' || getTabStatus(tabs[index + 1].id) === 'current'
-                      ? 'bg-green-300'
+                      ? 'bg-green-600'
                       : 'bg-slate-200'
                   }`} />
                 )}

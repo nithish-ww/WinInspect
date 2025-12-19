@@ -55,7 +55,7 @@ export default function ManagementProjectView({ projectId, onBack }: ManagementP
             <span className="text-sm font-bold text-slate-900">10/25 items • 40%</span>
           </div>
           <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-500 to-orange-500 h-3 rounded-full" style={{ width: '40%' }} />
+            <div className="bg-blue-600 h-3 rounded-full" style={{ width: '40%' }} />
           </div>
         </div>
       </div>
